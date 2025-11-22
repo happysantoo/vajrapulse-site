@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vortex - A lightweight Java 21 library for micro-batching requests to any backend. Built with virtual threads, smart batching, and comprehensive Micrometer metrics.">
+    <title>Vortex - Micro-Batching Library</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/images/favicons/favicon-48x48.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+    
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo-section">
+                    <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
+                        <img src="assets/images/vajrapulse_logo.png" alt="VajraPulse Logo" class="logo">
+                        <span class="logo-text">VajraPulse</span>
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html#features">VajraPulse</a></li>
+                    <li><a href="vortex.html">Vortex</a></li>
+                    <li><a href="index.html#examples">Examples</a></li>
+                    <li><a href="index.html#getting-started">Get Started</a></li>
+                    <li><a href="https://github.com/happysantoo/vortex" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Micro-Batching with<br>
+                        <span class="gradient-text">Virtual Threads</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        A lightweight Java 21 library for micro-batching requests to any backend. 
+                        Built with virtual threads, smart batching, and comprehensive Micrometer metrics.
+                        <strong>Released under Apache License 2.0</strong>.
+                    </p>
+                    <div class="hero-badges">
+                        <span class="badge badge-open-source">
+                            <span class="badge-icon">🔓</span>
+                            Open Source
+                        </span>
+                        <span class="badge badge-license">
+                            <span class="badge-icon">⚖️</span>
+                            Apache 2.0
+                        </span>
+                        <span class="badge">Java 21</span>
+                        <span class="badge">Virtual Threads</span>
+                        <span class="badge">Smart Batching</span>
+                        <span class="badge">Micrometer</span>
+                    </div>
+                    <div class="hero-cta">
+                        <a href="#getting-started" class="btn btn-primary">Get Started</a>
+                        <a href="https://github.com/happysantoo/vortex" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on GitHub</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="code-preview">
+                        <div class="code-header">
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                            <span class="code-title">MicroBatcher.java</span>
+                        </div>
+                        <pre><code>Backend<String> backend = batch -> {
+    // Your backend logic
+    return new BatchResult<>(
+        successes, failures
+    );
+};
+
+BatcherConfig config = BatcherConfig
+    .builder()
+    .batchSize(10)
+    .lingerTime(Duration.ofMillis(100))
+    .build();
+
+try (MicroBatcher<String> batcher = 
+     new MicroBatcher<>(backend, config)) {
+    CompletableFuture<BatchResult<String>> 
+        future = batcher.submit("data");
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <p class="section-subtitle">Everything you need for efficient micro-batching</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Virtual Threads</h3>
+                    <p>Leverage Java 21's Project Loom for high concurrency. Backend code can be blocking - virtual threads make it efficient.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Smart Batching</h3>
+                    <p>Triggers on batch size OR linger time (whichever comes first). Ensures optimal throughput and low latency.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Atomic Commits</h3>
+                    <p>Optional atomic commit mode where entire batch fails if any request fails. Perfect for transactional operations.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>Generic Backend</h3>
+                    <p>Works with any backend via the simple <code>Backend&lt;T&gt;</code> interface. HTTP, database, queues - anything.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Comprehensive Metrics</h3>
+                    <p>Micrometer metrics for queue depth, success/failure rates, latencies. Ready for Prometheus, Grafana, and more.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Auto-Replay</h3>
+                    <p>Intelligent replay of successful items when batches contain mixed results. Backend-driven or config-based decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section id="examples" class="examples">
+        <div class="container">
+            <h2 class="section-title">Code Examples</h2>
+            <p class="section-subtitle">See how easy it is to get started</p>
+            
+            <div class="examples-tabs">
+                <button class="tab-btn active" data-tab="basic">Basic Usage</button>
+                <button class="tab-btn" data-tab="atomic">Atomic Commits</button>
+                <button class="tab-btn" data-tab="replay">Auto-Replay</button>
+                <button class="tab-btn" data-tab="metrics">Metrics</button>
+            </div>
+            
+            <div class="tab-content active" id="basic">
+                <div class="example-card">
+                    <h3>Basic Micro-Batching</h3>
+                    <pre><code>import com.vajrapulse.vortex.*;
+import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
+
+// 1. Create a backend implementation
+Backend<String> backend = batch -> {
+    List<SuccessEvent<String>> successes = new ArrayList<>();
+    List<FailureEvent<String>> failures = new ArrayList<>();
+    
+    for (String item : batch) {
+        // Process item (e.g., HTTP call, database query)
+        successes.add(new SuccessEvent<>(item));
+    }
+    
+    return new BatchResult<>(successes, failures);
+};
+
+// 2. Configure the batcher
+BatcherConfig config = BatcherConfig.builder()
+    .batchSize(10)                    // Batch size trigger
+    .lingerTime(Duration.ofMillis(100)) // Time-based trigger
+    .atomicCommit(false)               // Optional: all-or-nothing
+    .maxConcurrency(10)                // Max concurrent batches
+    .build();
+
+// 3. Create and use the batcher
+try (MicroBatcher<String> batcher = new MicroBatcher<>(backend, config)) {
+    CompletableFuture<BatchResult<String>> future = batcher.submit("request-data");
+    BatchResult<String> result = future.get();
+    // Handle result...
+}</code></pre>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="atomic">
+                <div class="example-card">
+                    <h3>Atomic Commit Mode</h3>
+                    <pre><code>// Enable atomic commits - entire batch fails if any item fails
+BatcherConfig config = BatcherConfig.builder()
+    .batchSize(10)
+    .lingerTime(Duration.ofMillis(100))
+    .atomicCommit(true)  // All-or-nothing
+    .build();
+
+try (MicroBatcher<String> batcher = new MicroBatcher<>(backend, config)) {
+    // If any item in the batch fails, all items receive failure
+    CompletableFuture<BatchResult<String>> future = batcher.submit("data");
+    BatchResult<String> result = future.get();
+    
+    if (result.hasFailures()) {
+        // All items in this batch failed
+    }
+}</code></pre>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="replay">
+                <div class="example-card">
+                    <h3>Auto-Replay Successes</h3>
+                    <pre><code>// Backend that decides when to replay
+Backend<String> backend = new Backend<String>() {
+    @Override
+    public BatchResult<String> dispatch(List<String> batch) throws Exception {
+        // Your dispatch logic
+        return new BatchResult<>(successes, failures);
+    }
+    
+    @Override
+    public boolean shouldReplaySuccesses(BatchResult<String> result) {
+        // Replay when there are both successes and failures
+        return !result.getFailures().isEmpty() 
+            && !result.getSuccesses().isEmpty();
+    }
+};
+
+// Or use config-based replay
+BatcherConfig config = BatcherConfig.builder()
+    .batchSize(10)
+    .autoReplaySuccesses(true)  // Global replay policy
+    .build();</code></pre>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="metrics">
+                <div class="example-card">
+                    <h3>Accessing Metrics</h3>
+                    <pre><code>try (MicroBatcher<String> batcher = new MicroBatcher<>(backend, config)) {
+    // Access Micrometer registry
+    MeterRegistry registry = batcher.getMeterRegistry();
+    
+    // Metrics are automatically exposed:
+    // - vortex.requests.submitted
+    // - vortex.batches.dispatched
+    // - vortex.requests.succeeded
+    // - vortex.requests.failed
+    // - vortex.queue.depth (gauge)
+    // - vortex.batch.dispatch.latency
+    // - vortex.request.wait.latency
+    
+    // Export to Prometheus, Grafana, etc.
+    // registry.getMeters().forEach(...);
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section id="getting-started" class="getting-started">
+        <div class="container">
+            <h2 class="section-title">Get Started</h2>
+            <p class="section-subtitle">Add Vortex to your project in minutes</p>
+            
+            <div class="getting-started-content">
+                <div class="install-tabs">
+                    <button class="install-tab active" data-install="gradle-kotlin">Gradle (Kotlin)</button>
+                    <button class="install-tab" data-install="gradle-groovy">Gradle (Groovy)</button>
+                    <button class="install-tab" data-install="maven">Maven</button>
+                </div>
+                
+                <div class="install-content active" id="gradle-kotlin">
+                    <h3>Gradle (Kotlin DSL)</h3>
+                    <pre><code>dependencies {
+    implementation("com.vajrapulse:vortex:0.0.1")
+}</code></pre>
+                </div>
+                
+                <div class="install-content" id="gradle-groovy">
+                    <h3>Gradle (Groovy DSL)</h3>
+                    <pre><code>dependencies {
+    implementation 'com.vajrapulse:vortex:0.0.1'
+}</code></pre>
+                </div>
+                
+                <div class="install-content" id="maven">
+                    <h3>Maven</h3>
+                    <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.vajrapulse&lt;/groupId&gt;
+    &lt;artifactId&gt;vortex&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+                </div>
+            </div>
+            
+            <div class="requirements">
+                <h3>Requirements</h3>
+                <ul>
+                    <li>Java 21 or higher</li>
+                    <li>Gradle 9.2.0+ or Maven 3.6+</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section id="advantages" class="advantages">
+        <div class="container">
+            <h2 class="section-title">Why Vortex?</h2>
+            <p class="section-subtitle">Built for the modern Java ecosystem</p>
+            
+            <div class="advantages-content">
+                <div class="advantage-item">
+                    <div class="advantage-number">01</div>
+                    <div class="advantage-text">
+                        <h3>Simple Backend API</h3>
+                        <p>Write synchronous, blocking code. Virtual threads handle the efficiency. No need to manage CompletableFuture in your backend.</p>
+                    </div>
+                </div>
+                
+                <div class="advantage-item">
+                    <div class="advantage-number">02</div>
+                    <div class="advantage-text">
+                        <h3>Non-blocking Client API</h3>
+                        <p>Clients get async results via CompletableFuture. Compose, chain, and handle results asynchronously.</p>
+                    </div>
+                </div>
+                
+                <div class="advantage-item">
+                    <div class="advantage-number">03</div>
+                    <div class="advantage-text">
+                        <h3>Production Ready</h3>
+                        <p>Comprehensive test coverage, Micrometer integration, and battle-tested patterns. Ready for production workloads.</p>
+                    </div>
+                </div>
+                
+                <div class="advantage-item">
+                    <div class="advantage-number">04</div>
+                    <div class="advantage-text">
+                        <h3>Lightweight</h3>
+                        <p>Minimal dependencies. Clean, simple API. Easy to understand and integrate into any project.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Source Section -->
+    <section class="open-source">
+        <div class="container">
+            <div class="open-source-content">
+                <div class="open-source-icon">🔓</div>
+                <h2 class="section-title">Open Source & Free</h2>
+                <p class="section-subtitle">
+                    Vortex is completely open source and free to use. 
+                    Released under the <strong>Apache License 2.0</strong>, 
+                    you can use it in commercial and personal projects without restrictions.
+                </p>
+                
+                <div class="license-info">
+                    <div class="license-card">
+                        <div class="license-icon">⚖️</div>
+                        <h3>Apache License 2.0</h3>
+                        <p>
+                            Permissive open source license that allows you to:
+                        </p>
+                        <ul class="license-benefits">
+                            <li>✅ Use commercially</li>
+                            <li>✅ Modify and distribute</li>
+                            <li>✅ Use in proprietary software</li>
+                            <li>✅ Patent use granted</li>
+                        </ul>
+                        <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                            Read Full License
+                        </a>
+                    </div>
+                    
+                    <div class="license-card">
+                        <div class="license-icon">💡</div>
+                        <h3>Contribute & Collaborate</h3>
+                        <p>
+                            Vortex is built by the community, for the community. 
+                            Contributions are welcome!
+                        </p>
+                        <ul class="license-benefits">
+                            <li>✅ Open source on GitHub</li>
+                            <li>✅ Community-driven development</li>
+                            <li>✅ Issue tracking and PRs welcome</li>
+                            <li>✅ Transparent development process</li>
+                        </ul>
+                        <a href="https://github.com/happysantoo/vortex" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/vajrapulse_logo.png" alt="VajraPulse Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">VajraPulse</span>
+                    </div>
+                    <p class="footer-tagline">वज्र - "thunderbolt"</p>
+                    <p class="footer-description">High-performance micro-batching with Java 21 virtual threads.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Vortex</h4>
+                    <ul>
+                        <li><a href="https://github.com/happysantoo/vortex" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://search.maven.org/search?q=g:com.vajrapulse%20AND%20a:vortex" target="_blank" rel="noopener noreferrer">Maven Central</a></li>
+                        <li><a href="https://github.com/happysantoo/vortex/blob/main/README.md" target="_blank" rel="noopener noreferrer">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>VajraPulse</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="https://github.com/happysantoo/vajrapulse" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://search.maven.org/search?q=g:com.vajrapulse" target="_blank" rel="noopener noreferrer">Maven Central</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="https://github.com/happysantoo/vortex/tree/main/examples" target="_blank" rel="noopener noreferrer">Examples</a></li>
+                        <li><a href="https://github.com/happysantoo/vortex/tree/main/documents" target="_blank" rel="noopener noreferrer">Design Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 VajraPulse. Built with Java 21 and virtual threads.</p>
+                <p>Released under <strong>Apache License 2.0</strong> - Free for commercial and personal use.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
+
