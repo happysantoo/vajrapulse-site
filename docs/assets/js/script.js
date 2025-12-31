@@ -93,11 +93,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Observe feature cards and advantage items
-    document.querySelectorAll('.feature-card, .advantage-item, .perf-card').forEach(el => {
+    document.querySelectorAll('.feature-card, .advantage-item, .perf-card, .why-card, .highlight-card, .roadmap-item').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
+    });
+    
+    // Stagger animation for roadmap items
+    const roadmapItems = document.querySelectorAll('.roadmap-item');
+    roadmapItems.forEach((item, index) => {
+        item.style.transitionDelay = `${index * 0.1}s`;
+    });
+    
+    // Add animation to comparison table rows
+    const comparisonRows = document.querySelectorAll('.comparison-table tbody tr');
+    comparisonRows.forEach((row, index) => {
+        row.style.opacity = '0';
+        row.style.transform = 'translateX(-20px)';
+        row.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        setTimeout(() => {
+            row.style.opacity = '1';
+            row.style.transform = 'translateX(0)';
+        }, index * 50);
     });
 });
 

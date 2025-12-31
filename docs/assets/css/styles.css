@@ -82,6 +82,31 @@ body {
     color: var(--primary-color);
 }
 
+.badge-new {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-github {
+    background: var(--bg-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.nav-github:hover {
+    background: var(--primary-color);
+    color: white !important;
+    border-color: var(--primary-color);
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -133,6 +158,25 @@ body {
     transition: all 0.3s;
 }
 
+@media (max-width: 768px) {
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .nav-links.active li {
+        margin: 0.5rem 0;
+    }
+}
+
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;
@@ -162,11 +206,72 @@ body {
     background-clip: text;
 }
 
+.hero-badge-new {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(30, 64, 175, 0.1));
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
 .hero-subtitle {
     font-size: 1.25rem;
     color: var(--text-secondary);
     margin-bottom: 2rem;
     line-height: 1.7;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .hero-badges {
@@ -203,6 +308,18 @@ body {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
     border-color: #3b82f6;
+}
+
+.badge-java21 {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border-color: #f59e0b;
+}
+
+.badge-virtual {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+    border-color: #8b5cf6;
 }
 
 .hero-cta {
@@ -307,19 +424,308 @@ section {
     padding: 80px 0;
 }
 
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
 .section-title {
     font-size: 2.5rem;
     font-weight: 700;
-    text-align: center;
     margin-bottom: 1rem;
     color: var(--text-primary);
 }
 
 .section-subtitle {
     font-size: 1.125rem;
-    text-align: center;
     color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Why VajraPulse Section */
+.why-section {
+    background: var(--bg-primary);
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.why-card {
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+}
+
+.why-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.why-card.featured {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05), rgba(30, 64, 175, 0.05));
+    border-color: var(--primary-color);
+    border-width: 2px;
+}
+
+.why-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.why-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.why-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.why-features {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.why-features li {
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.9375rem;
+}
+
+.why-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Comparison Section */
+.comparison-section {
+    background: var(--bg-secondary);
+}
+
+.comparison-table-wrapper {
+    overflow-x: auto;
     margin-bottom: 3rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-primary);
+    min-width: 800px;
+}
+
+.comparison-table thead {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.comparison-table th {
+    padding: 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+
+.comparison-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.comparison-table tbody tr:hover {
+    background: var(--bg-secondary);
+}
+
+.vajrapulse-col {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(30, 64, 175, 0.1));
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.tool-logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.tool-badge {
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.comparison-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.highlight-card {
+    text-align: center;
+    padding: 2rem;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.highlight-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.highlight-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.highlight-card p {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+/* Roadmap Section */
+.roadmap-section {
+    background: var(--bg-primary);
+}
+
+.roadmap-timeline {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+}
+
+.roadmap-item {
+    position: relative;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-left: 2rem;
+}
+
+.roadmap-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 2rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: 3px solid var(--bg-primary);
+}
+
+.roadmap-phase {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.roadmap-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.roadmap-status.completed {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.roadmap-status.in-progress {
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.roadmap-status.planned {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+}
+
+.roadmap-item h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.roadmap-item ul {
+    list-style: none;
+    padding: 0;
+}
+
+.roadmap-item li {
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.roadmap-item li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-color);
+}
+
+.roadmap-note {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05), rgba(30, 64, 175, 0.05));
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.roadmap-note p {
+    color: var(--text-secondary);
+    line-height: 1.7;
 }
 
 /* Features Section */
@@ -605,6 +1011,12 @@ section {
     font-weight: 500;
 }
 
+.perf-note {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+}
+
 /* Open Source Section */
 .open-source {
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -812,11 +1224,16 @@ section {
         font-size: 2.5rem;
     }
     
+    .hero-stats {
+        grid-template-columns: 1fr;
+    }
+    
     .section-title {
         font-size: 2rem;
     }
     
-    .features-grid {
+    .features-grid,
+    .why-grid {
         grid-template-columns: 1fr;
     }
     
@@ -839,12 +1256,37 @@ section {
         width: 100%;
     }
     
-    .license-info {
+    .license-info,
+    .comparison-highlights {
         grid-template-columns: 1fr;
     }
     
     .license-card {
         padding: 2rem;
+    }
+    
+    .comparison-table-wrapper {
+        margin: 0 -20px;
+    }
+    
+    .roadmap-timeline {
+        padding-left: 1rem;
+    }
+    
+    .roadmap-item {
+        margin-left: 1.5rem;
+    }
+    
+    .roadmap-item::before {
+        left: -1.75rem;
+    }
+    
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .why-card.featured {
+        border-width: 1px;
     }
 }
 
